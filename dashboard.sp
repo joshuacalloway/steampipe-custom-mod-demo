@@ -8,7 +8,7 @@ with associated_sg as (
     sg ->> 'GroupId' as sg_id,
     sg ->> 'GroupName' as sg_name
   from
-    aws_ec2_network_interface,
+    parilux.aws_ec2_network_interface,
     jsonb_array_elements(groups) as sg
 )
 select count(*) as Parilux
@@ -27,7 +27,7 @@ with associated_sg as (
     sg ->> 'GroupId' as sg_id,
     sg ->> 'GroupName' as sg_name
   from
-    aws_ec2_network_interface,
+    fosprod.aws_ec2_network_interface,
     jsonb_array_elements(groups) as sg
 )
 select count(*) as FosProd
