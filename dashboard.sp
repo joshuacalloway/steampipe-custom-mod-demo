@@ -100,11 +100,22 @@ dashboard "public_s3buckets" {
       sql = <<-EOQ
 select
   -- Required Columns
-  count(*)
+  count(*) as FosProd
 from
   fosprod.aws_s3_bucket
 where (not block_public_acls or not block_public_policy or not ignore_public_acls or not restrict_public_buckets)
-
+EOQ
+      width = 2
+    }
+  }
+    card {
+      sql = <<-EOQ
+select
+  -- Required Columns
+  count(*) as Parilux
+from
+  parilux.aws_s3_bucket
+where (not block_public_acls or not block_public_policy or not ignore_public_acls or not restrict_public_buckets)
 EOQ
       width = 2
     }
@@ -140,6 +151,40 @@ select
   account_id
 from
   fosprod.aws_s3_bucket
+where (not block_public_acls or not block_public_policy or not ignore_public_acls or not restrict_public_buckets)
+EOQ
+  }
+  table {
+    title = "Parilux"
+    sql = <<EOQ
+select
+  -- Required Columns
+  name,
+  case
+    when
+      block_public_acls
+      and block_public_policy
+      and ignore_public_acls
+      and restrict_public_buckets
+    then
+      'ok'
+    else
+      'alarm'
+  end status,
+  case
+    when
+      block_public_acls
+      and block_public_policy
+      and ignore_public_acls
+      and restrict_public_buckets
+    then name || ' blocks public access.'
+    else name || ' does not block public access.'
+  end reason,
+  -- Additional Dimensions
+  region,
+  account_id
+from
+  parilux.aws_s3_bucket
 where (not block_public_acls or not block_public_policy or not ignore_public_acls or not restrict_public_buckets)
 EOQ
   }
