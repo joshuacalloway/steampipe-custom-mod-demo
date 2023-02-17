@@ -127,6 +127,7 @@ dashboard "public_s3buckets" {
     card {
       type = "alert"
       sql = query.count_parilux_s3buckets.sql
+      width = 2
     }
   }
   table {
