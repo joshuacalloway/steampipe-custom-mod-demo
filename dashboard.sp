@@ -107,7 +107,6 @@ where (not block_public_acls or not block_public_policy or not ignore_public_acl
 EOQ
       width = 2
     }
-  }
     card {
       sql = <<-EOQ
 select
