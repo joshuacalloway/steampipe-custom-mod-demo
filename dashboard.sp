@@ -111,7 +111,7 @@ EOQ
   }
   table {
     title = "FosProd"
-    sql - <<EOQ
+    sql = <<EOQ
 select
   -- Required Columns
   name,
